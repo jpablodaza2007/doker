@@ -8,3 +8,4 @@ ahora entramos a doker y verificamos si se crearon
 una vez echo solo es cuestion de entrar a los respectivos clientes graficos y los creamos
 ![DBeaver](<Captura de pantalla 2025-10-22 213649.png>)
 ![HeidiSQL](<Captura de pantalla 2025-10-22 215154.png>)
+![Beekeeper Studio](image-3.png)
