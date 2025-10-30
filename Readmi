@@ -1,0 +1,84 @@
+🧩 Parte 1 – Análisis conceptual (Artículo de Devart)
+1. Problema principal que resuelve la normalización y su importancia en sistemas empresariales
+
+La normalización busca eliminar la redundancia de datos (repetición innecesaria de información) y 
+evitar las anomalías en las operaciones de inserción, actualización y eliminación.
+
+En sistemas empresariales, esto es crítico porque:
+
+Garantiza la coherencia e integridad de los datos en múltiples procesos (ventas, clientes, inventarios, etc.).
+
+Facilita el mantenimiento y escalabilidad del sistema, al reducir inconsistencias.
+
+Mejora la calidad de la información, lo que impacta directamente en la toma de decisiones y en la confianza en los datos.
+
+2. Diferencias entre 1NF, 2NF y 3NF
+
+Según los ejemplos típicos (como los de Devart):
+
+Primera Forma Normal (1NF):
+
+Elimina los valores repetidos o agrupados dentro de una misma columna.
+
+Cada campo debe tener solo un valor atómico.
+
+Ejemplo: una columna llamada “Teléfonos” con varios números separados por comas viola la 1NF; se corrige 
+creando una tabla donde cada teléfono tenga su propio registro.
+
+Segunda Forma Normal (2NF):
+
+Se aplica a tablas que ya están en 1NF.
+
+Elimina las dependencias parciales, es decir, cuando una columna depende solo de una parte de una clave compuesta.
+
+Ejemplo: si una tabla de “Pedidos” tiene clave compuesta (ID_Pedido, ID_Producto) y el campo “Nombre_Producto” 
+depende solo de ID_Producto, se separa en otra tabla “Productos”.
+
+Tercera Forma Normal (3NF):
+
+Se aplica a tablas en 2NF.
+
+Elimina las dependencias transitivas, donde un atributo no clave depende de otro atributo no clave.
+
+Ejemplo: si “ID_Cliente” determina “Ciudad” y “Ciudad” determina “Código Postal”, se separa la tabla de ciudades 
+para evitar redundancia.
+
+3. Ejemplo donde la normalización mejora la integridad pero afecta el rendimiento
+
+En los ejemplos de Devart, cuando los datos de clientes, pedidos y productos se separan en distintas tablas (para cumplir 3NF), se mejora la integridad referencial:
+
+No se repiten nombres de clientes o precios de productos en cada pedido.
+
+Los cambios en una tabla (por ejemplo, el nombre de un cliente) se reflejan en toda la base.
+
+Sin embargo, esta separación implica que para obtener información consolidada (como un informe de ventas completo) se deban hacer múltiples uniones (JOINs) entre tablas.
+
+Esto puede afectar el rendimiento en bases de datos grandes, ya que cada JOIN aumenta el tiempo de respuesta y el consumo de recursos.
+
+4. Papel de las dependencias funcionales y cómo identificarlas
+
+Las dependencias funcionales indican cómo un atributo determina a otro dentro de una tabla.
+Por ejemplo, si en una tabla de empleados el ID_Empleado determina el Nombre, Cargo y Salario, se expresa como:
+ID_Empleado → Nombre, Cargo, Salario.
+
+Su papel en la normalización es detectar relaciones lógicas entre columnas para decidir qué atributos deben separarse en otras tablas.
+Para identificarlas:
+
+Analizas las reglas del negocio (qué datos dependen de cuáles).
+
+Buscas columnas que se repiten con los mismos valores de otra (indicando dependencia).
+
+Compruebas si un atributo puede predecir el valor de otro sin ambigüedad.
+
+5. Cuándo es justificable desnormalizar una base de datos
+
+La desnormalización se justifica cuando las exigencias de rendimiento y velocidad de consulta superan la necesidad de mantener el modelo perfectamente normalizado.
+Ejemplos de contexto:
+
+Sistemas de reportes o análisis en tiempo real, donde se requiere obtener datos rápidamente.
+
+Data warehouses o sistemas de inteligencia de negocios (BI).
+
+Aplicaciones con muchas lecturas y pocas escrituras, donde reducir los JOINs mejora el tiempo de respuesta.
+
+En estos casos, se acepta cierta redundancia controlada para optimizar consultas sin comprometer demasiado la consistencia.
